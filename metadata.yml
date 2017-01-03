@@ -1,0 +1,5 @@
+name: sequence
+type: processor
+maintainer: darfed@gmail.com
+license: Apache-2.0
+description: "Adds sequence number to metrics."
