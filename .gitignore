@@ -1,2 +1,5 @@
 .vagrant
 ubuntu-*.log
+.eggs
+.idea
+.venv
