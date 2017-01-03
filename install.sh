@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
-echo Updating apt
 
 
+echo Adding snaptel repo for apt
 curl -s https://packagecloud.io/install/repositories/intelsdi-x/snap/script.deb.sh | sudo bash
 sudo apt-get install -y snap-telemetry
+
+echo Installing pip
+sudo apt-get update
+sudo apt-get install -y python-pip
+
+echo Installing python snaptel plugin lib
+sudo pip install git+https://github.com/jcooklin/snap-plugin-lib-py
 
 sudo service snap-telemetry start
 export OS=$(uname -s | tr '[:upper:]' '[:lower:]')
