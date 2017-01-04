@@ -27,15 +27,17 @@ LOG = logging.getLogger(__name__)
 class SequenceGenerator(object):
 
     lock = threading.Lock()
+    sequence_id = 0
 
     @staticmethod
     def get_sequence_id():
-        with SequenceGenerator.lock.acquire():
-            if not SequenceGenerator.sequence_id:
-                SequenceGenerator.sequence_id = 0
+        try:
+            SequenceGenerator.lock.acquire()
             SequenceGenerator.sequence_id += 1
             returnable_sequence_id = SequenceGenerator.sequence_id
             return returnable_sequence_id
+        finally:
+            SequenceGenerator.lock.release()
 
 
 class Sequence(snap.Processor):
@@ -48,7 +50,7 @@ class Sequence(snap.Processor):
         metric_sequence_id = SequenceGenerator.get_sequence_id()
         LOG.debug("Tagging sequence id %s" % metric_sequence_id)
         for metric in metrics:
-            metric.tags["sequence-id"] = metric_sequence_id
+            metric.tags["sequence-id"] = str(metric_sequence_id)
         return metrics
 
     def get_config_policy(self):

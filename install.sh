@@ -19,5 +19,5 @@ curl -sfL "https://github.com/intelsdi-x/snap-plugin-publisher-file/releases/dow
 curl -sfL "https://github.com/intelsdi-x/snap-plugin-collector-psutil/releases/download/8/snap-plugin-collector-psutil_${OS}_${ARCH}" -o snap-plugin-collector-psutil
 snaptel plugin load snap-plugin-publisher-file
 snaptel plugin load snap-plugin-collector-psutil
-curl https://raw.githubusercontent.com/intelsdi-x/snap/master/examples/tasks/psutil-file.yaml -o /tmp/psutil-file.yaml
-snaptel task create -t /tmp/psutil-file.yaml
+snaptel plugin load /vagrant_snap/sequence/sequence_processor.py
+snaptel task create -t /vagrant_snap/sequence_and_publish_task.yml
