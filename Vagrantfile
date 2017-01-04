@@ -52,7 +52,7 @@ config.vm.provider "virtualbox" do |vb|
   #vb.name = "pukka"
 
   # Customize the amount of memory on the VM:
-  vb.memory = "8192"
+  vb.memory = "2048"
   vb.cpus = "2"
 end
 

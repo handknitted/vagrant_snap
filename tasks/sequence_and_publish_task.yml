@@ -17,4 +17,4 @@
         publish:
           - plugin_name: "file"
             config:
-              file: "/tmp/psutil_metrics.log"
+              file: "/tmp/sequenced_psutil_metrics.log"

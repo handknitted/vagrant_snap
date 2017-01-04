@@ -20,4 +20,6 @@ curl -sfL "https://github.com/intelsdi-x/snap-plugin-collector-psutil/releases/d
 snaptel plugin load snap-plugin-publisher-file
 snaptel plugin load snap-plugin-collector-psutil
 snaptel plugin load /vagrant_snap/sequence/sequence_processor.py
-snaptel task create -t /vagrant_snap/sequence_and_publish_task.yml
+snaptel task create -t /vagrant_snap/tasks/sequence_and_publish_task.yml
+snaptel plugin load /vagrant_snap/rolling_average/rolling_average_processor.py
+snaptel task create -t /vagrant_snap/tasks/average_and_publish_task.yml
