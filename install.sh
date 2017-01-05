@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 echo Adding snaptel repo for apt
 curl -s https://packagecloud.io/install/repositories/intelsdi-x/snap/script.deb.sh | sudo bash
 sudo apt-get install -y snap-telemetry
@@ -12,14 +11,16 @@ sudo apt-get install -y python-pip
 echo Installing python snaptel plugin lib
 sudo pip install git+https://github.com/jcooklin/snap-plugin-lib-py
 
-sudo service snap-telemetry start
-export OS=$(uname -s | tr '[:upper:]' '[:lower:]')
-export ARCH=$(uname -m)
-curl -sfL "https://github.com/intelsdi-x/snap-plugin-publisher-file/releases/download/2/snap-plugin-publisher-file_${OS}_${ARCH}" -o snap-plugin-publisher-file
-curl -sfL "https://github.com/intelsdi-x/snap-plugin-collector-psutil/releases/download/8/snap-plugin-collector-psutil_${OS}_${ARCH}" -o snap-plugin-collector-psutil
-snaptel plugin load snap-plugin-publisher-file
-snaptel plugin load snap-plugin-collector-psutil
-snaptel plugin load /vagrant_snap/sequence/sequence_processor.py
-snaptel task create -t /vagrant_snap/tasks/sequence_and_publish_task.yml
-snaptel plugin load /vagrant_snap/rolling_average/rolling_average_processor.py
-snaptel task create -t /vagrant_snap/tasks/average_and_publish_task.yml
+echo copying over my snaptel config file
+sudo cp /vagrant_snap/files/snapteld.conf /etc/snap/.
+
+sudo sudo sed -i "s/vagrant_snap\.tribe_bind_address/${BIND_IP}/g" /etc/snap/snapteld.conf
+sudo sudo sed -i "s/vagrant_snap\.tribe_seed/$SEED_IP:6000/g" /etc/snap/snapteld.conf
+sudo touch /etc/snap/snapd.conf
+echo restarting snap-telemetry
+sudo service snap-telemetry restart
+# give the service a moment to collect itself - too quick and it complains that we haven't enabled tribe
+sleep 1
+echo Creating mmla agreement
+snaptel agreement create mmla
+snaptel agreement join mmla `hostname`
