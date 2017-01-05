@@ -1,6 +1,8 @@
 # vagrant_snap
 
     vagrant up
-    vagrant ssh
-    snaptel task list
-    snaptel task watch [task_id]
+    vagrant ssh pukka
+    tail -f /tmp/rolling_average_metrics.log
+    
+    vagrant ssh typhoo
+    tail -f /tmp/rolling_average_metrics.log
