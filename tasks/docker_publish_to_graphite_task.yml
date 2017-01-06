@@ -1,0 +1,14 @@
+---
+  version: 1
+  schedule:
+    type: "simple"
+    interval: "5s"
+  max-failures: 10
+  workflow:
+    collect:
+      metrics:
+        /intel/docker/*: {}
+      publish:
+        - plugin_name: "graphite"
+          config:
+            server: "192.168.16.7"

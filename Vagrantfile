@@ -33,15 +33,16 @@ pukka_ip = "192.168.16.6"
 config.vm.define "pukka" do |pukka|
     pukka.vm.hostname = "pukka"
     pukka.vm.network "private_network", ip: pukka_ip
-    pukka.vm.provision "shell", preserve_order: true, path: "install.sh", env: {"BIND_IP" => pukka_ip, "SEED_IP" => pukka_ip}
-    pukka.vm.provision "shell", preserve_order: true, path: "start_tasks.sh"
+    pukka.vm.provision "shell", preserve_order: true, path: "provisioning/install.sh", env: {"BIND_IP" => pukka_ip, "SEED_IP" => pukka_ip}
 end
 
 config.vm.define "typhoo" do |typhoo|
     typhoo_ip = "192.168.16.7"
     typhoo.vm.hostname = "typhoo"
     typhoo.vm.network "private_network", ip: "192.168.16.7"
-    typhoo.vm.provision "shell", preserve_order: true, path: "install.sh", env: {"BIND_IP" => typhoo_ip, "SEED_IP" => pukka_ip}
+    typhoo.vm.provision "shell", preserve_order: true, path: "provisioning/install.sh", env: {"BIND_IP" => typhoo_ip, "SEED_IP" => pukka_ip}
+    typhoo.vm.provision "shell", path: "provisioning/install_graphite.sh"
+    typhoo.vm.provision "shell", preserve_order: true, path: "provisioning/start_tasks.sh"
 end
 
 end

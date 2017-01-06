@@ -24,3 +24,10 @@ sleep 1
 echo Creating mmla agreement
 snaptel agreement create mmla
 snaptel agreement join mmla `hostname`
+
+
+# kubernetes stuff
+
+sudo apt-get -y install docker.io
+
+docker run -d -P training/webapp python app.py

@@ -40,7 +40,6 @@ class RollingAverage(snap.Processor):
         for namespace_key, metric_list in self.metrics_buffer.iteritems():
             count = len(metric_list)
             if count > 0:
-                # raise Exception("Processing metric %s" % namespace_key)
                 total_value = sum([metric.data
                                    for metric in metric_list])
                 average_value = total_value / count
@@ -61,7 +60,6 @@ class RollingAverage(snap.Processor):
             unit=seed_metric.unit,
             description=seed_metric.description
         )
-        # duplicated_metric.timestamp(seed_metric.timestamp)
         duplicated_metric.namespace.add_static_element(
             config['average-suffix'])
         return duplicated_metric
